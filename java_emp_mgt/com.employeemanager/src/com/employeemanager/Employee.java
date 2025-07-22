@@ -1,4 +1,4 @@
-package employeemanager;
+package com.employeemanager;
 
 public class Employee {
 	int emp_id;
