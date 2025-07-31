@@ -20,7 +20,7 @@ public class DatabaseConnector {
 	static {
 		try {
 			Properties props = new Properties();
-            InputStream input = DatabaseConnector.class.getClassLoader().getResourceAsStream("config.properties");
+            InputStream input = DatabaseConnector.class.getClassLoader().getResourceAsStream("employeemanager.properties");
             if (input == null) {
                 throw new RuntimeException("Cannot find config.properties file");
             }
