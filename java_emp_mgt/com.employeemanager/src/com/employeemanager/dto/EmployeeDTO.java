@@ -50,7 +50,7 @@ public class EmployeeDTO {
     public String getJoin_date() {
         return join_date;
     }
-//	public String toString() {
-//		return first_name+" "+last_name;
-//	}
+	public String toString() {
+		return first_name+" "+last_name+" - phone : "+phone;
+	}
 }

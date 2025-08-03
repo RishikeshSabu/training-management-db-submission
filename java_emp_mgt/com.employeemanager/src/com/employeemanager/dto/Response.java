@@ -1,29 +1,36 @@
 package com.employeemanager.dto;
 
 public class Response<T> {
-	private boolean isSuccess;
+	private int statusCode;
 	private String errorMessage;
 	private T data;
-	public Response(boolean isSuccess,T data,String errorMessage) {
-		this.isSuccess=isSuccess;
+	
+	public Response(int statusCode, String errorMessage, T data) {
+        this.statusCode = statusCode;
+        this.errorMessage = errorMessage;
+        this.data = data;
+    }
+	
+	public Response(int successCode,T data) {
+		this.statusCode=successCode;
 		this.data=data;
+		
+	}
+	public Response(int successCode,String errorMessage) {
+		this.statusCode=successCode;
+		
 		this.errorMessage = errorMessage;
 	}
-	public static <T> Response<T> success(T data) {
-        return new Response<>(true, data, null);
-    }
-	public static <T> Response<T> failure(String errorMessage) {
-        return new Response<>(false, null,errorMessage);
-    }
-	public boolean isSuccess() {
-        return isSuccess;
-    }
+
 
     public T getData() {
         return data;
     }
     public String getErrorMessage() {
         return errorMessage;
+    }
+    public int getStatusCode() {
+    	return statusCode;
     }
 	
 }
