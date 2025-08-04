@@ -12,8 +12,7 @@ public class EmployeeManagerService {
 	public EmployeeDao dao=new EmployeeDao();
 	public int loadAndSavetoDb(String filepath){
 		
-		//ArrayList<String> responseMessage=new ArrayList<>();
-		//if(!filepath.toLowerCase().endsWith(".csv")) return Response.failure("The file must be a csv file");
+		
 		int rowsInserted=0;
 		ArrayList<String[]> records=new ArrayList<>();
 		try {
@@ -39,13 +38,13 @@ public class EmployeeManagerService {
 			    	    continue;
 			    	}
 				EmployeeDTO employee=new EmployeeDTO(Integer.parseInt(record[0]),record[1],record[2],record[3],record[4],record[5],record[6],record[7]);
-				//responseMessage.add(Integer.parseInt(record[0])+" has been successfully inserted");
+				
 				if(dao.isEmployeeExist(employee.getEmp_id())) continue;
 				dao.saveEmployee(employee);
 				rowsInserted++;
 				
 			}catch(Exception e) {
-				return 0; //error
+				return 0; 
 				
 			}
 			
