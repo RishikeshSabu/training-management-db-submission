@@ -5,6 +5,8 @@ import com.employeemanager.dto.EmployeeDTO;
 import com.employeemanager.util.Validation;
 import com.employeemanager.util.DatabaseConnector;
 import com.employeemanager.constant.Constants;
+import com.employeemanager.exceptions.EmployeeDaoException;
+import com.employeemanager.exceptions.EmployeeNotFoundException;
 
 
 import java.sql.Connection;
@@ -17,7 +19,7 @@ import java.sql.ResultSet;
 
 
 public class EmployeeDao {
-	public boolean saveEmployee(EmployeeDTO employee) {
+	public boolean saveEmployee(EmployeeDTO employee) throws EmployeeDaoException {
 		
 	    try(Connection con=DatabaseConnector.getConnection()){
 	    	String query=Constants.INSERTEMPLOYEE;
@@ -36,11 +38,12 @@ public class EmployeeDao {
 	    	}
 	    }
 	    catch (SQLException e) {
-	        e.printStackTrace(); 
-	        return false;
+	    	throw new EmployeeDaoException("Error in saving employee",e);
+	        //e.printStackTrace(); 
+	        //return false;
 	    }
 	}
-	public ArrayList<EmployeeDTO> getAllEmployees(){
+	public ArrayList<EmployeeDTO> getAllEmployees() throws EmployeeDaoException{
 		ArrayList<EmployeeDTO> employees=new ArrayList<>();
 		String selectQuery=Constants.GET_ALL_EMPLOYEES;
 		try(Connection con=DatabaseConnector.getConnection();
@@ -60,11 +63,12 @@ public class EmployeeDao {
 			}
 			return employees;
 		}catch(SQLException e) {
-			return employees;
+			throw new EmployeeDaoException("Error in fetching employees",e);
+			//return employees;
 		}
 		
 	}
-	public boolean isEmployeeExist(int empId) {
+	public boolean isEmployeeExist(int empId)throws EmployeeNotFoundException {
 		try(Connection con=DatabaseConnector.getConnection();
 				PreparedStatement statement=con.prepareStatement(Constants.SELECT_EMPLOYEE_BY_ID)){
 			statement.setInt(1, empId);
@@ -72,8 +76,9 @@ public class EmployeeDao {
 				return rs.next();
 			}
 		}catch(SQLException e) {
-			e.printStackTrace();
-			return false;
+			throw new EmployeeNotFoundException("employee doesnt Exist",e);
+//			e.printStackTrace();
+//			return false;
 		}
 	}
 	

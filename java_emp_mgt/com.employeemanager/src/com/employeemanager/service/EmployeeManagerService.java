@@ -5,12 +5,15 @@ import com.employeemanager.util.ReadCSVFile;
 import com.employeemanager.dao.EmployeeDao;
 import com.employeemanager.dto.EmployeeDTO;
 import com.employeemanager.util.Validation;
+import com.employeemanager.exceptions.EmployeeServiceException;
+import com.employeemanager.exceptions.EmployeeNotFoundException;
+import com.employeemanager.exceptions.EmployeeDaoException;
 
 import java.util.ArrayList;
 
 public class EmployeeManagerService {
 	public EmployeeDao dao=new EmployeeDao();
-	public int loadAndSavetoDb(String filepath){
+	public int loadAndSavetoDb(String filepath) throws EmployeeServiceException{
 		
 		
 		int rowsInserted=0;
@@ -18,6 +21,7 @@ public class EmployeeManagerService {
 		try {
 			records=ReadCSVFile.readCSV(filepath);
 		}catch(Exception e) {
+			//throw new EmployeeServiceException("Error in reading the file",e);
 			return 0;
 		}
 		for (String[] record : records) {
@@ -43,9 +47,12 @@ public class EmployeeManagerService {
 				dao.saveEmployee(employee);
 				rowsInserted++;
 				
-			}catch(Exception e) {
-				return 0; 
+			}catch(EmployeeNotFoundException e) {
+				throw new EmployeeServiceException("Employee doesnt exist",e);
+				//return 0; 
 				
+			}catch(EmployeeDaoException e) {
+				throw new EmployeeServiceException("Failed to save employee",e);
 			}
 			
 		}
@@ -53,7 +60,11 @@ public class EmployeeManagerService {
 		
 						
 	}
-	public ArrayList<EmployeeDTO> getAllEmployees(){
+	public ArrayList<EmployeeDTO> getAllEmployees() throws EmployeeServiceException{
+		try {
 		return dao.getAllEmployees();
+		}catch(EmployeeDaoException e) {
+			throw new EmployeeServiceException("Failed to fetch All the employees",e);
+		}
 	}
 }
