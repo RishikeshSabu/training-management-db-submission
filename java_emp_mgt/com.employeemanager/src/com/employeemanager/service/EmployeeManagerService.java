@@ -20,6 +20,8 @@ public class EmployeeManagerService {
 		ArrayList<String[]> records=new ArrayList<>();
 		try {
 			records=ReadCSVFile.readCSV(filepath);
+			System.out.println("Total records read: " + records.size());
+
 		}catch(Exception e) {
 			//throw new EmployeeServiceException("Error in reading the file",e);
 			return 0;
@@ -31,14 +33,14 @@ public class EmployeeManagerService {
 				String emailValidator = Validation.emailValidator(record[3]);
 			    String phoneValidator = Validation.phoneValidator(record[4]);
 			    String departmentValidator = Validation.departmentValidator(record[5]);
-			    String joinDateValidator = Validation.joinDateValidator(record[7]);
+			    //String joinDateValidator = Validation.joinDateValidator(record[7]);
 			    if (!firstNameValidator.equals("Valid") ||
 			    	    !lastNameValidator.equals("Valid") ||
 			    	    !emailValidator.equals("Valid") ||
 			    	    !phoneValidator.equals("Valid") ||
-			    	    !departmentValidator.equals("Valid") ||
-			    	    !joinDateValidator.equals("Valid")) {
-
+			    	    !departmentValidator.equals("Valid") 
+			    	    ) {
+			    	
 			    	    continue;
 			    	}
 				EmployeeDTO employee=new EmployeeDTO(Integer.parseInt(record[0]),record[1],record[2],record[3],record[4],record[5],record[6],record[7]);

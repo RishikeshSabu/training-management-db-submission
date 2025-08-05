@@ -38,7 +38,10 @@ public class EmployeeDao {
 	    	}
 	    }
 	    catch (SQLException e) {
+	    	System.out.println("error inseting employee");
+	    	e.printStackTrace(); 
 	    	throw new EmployeeDaoException("Error in saving employee",e);
+	    	//System.out.println("error inseting employee");
 	        //e.printStackTrace(); 
 	        //return false;
 	    }
