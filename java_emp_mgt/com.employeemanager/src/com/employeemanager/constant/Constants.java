@@ -4,8 +4,10 @@ public class Constants {
 	private Constants() {}
 	
 	public static final String INSERTEMPLOYEE="INSERT INTO employee (emp_id,first_name,last_name,email,phone,department,salary,join_date) VALUES (?,?,?,?,?,?,?,?)";
-	public static final String SELECT_EMPLOYEE_BY_ID = "SELECT emp_id,first_name,last_name,phone FROM employee WHERE emp_id = ?";
+	public static final String SELECT_EMPLOYEE_BY_ID = "SELECT emp_id,first_name,last_name,email,phone,department,salary,join_date FROM employee WHERE emp_id = ?";
     public static final String GET_ALL_EMPLOYEES = "SELECT * FROM employee";
+    public static final String UPDATE_EMPLOYEE="UPDATE employee SET first_name=?, last_name=?, email=?, phone=?, department=?, salary=?, join_date=? WHERE emp_id=?";
+    public static final String DELETE_EMPLOYEE="DELETE FROM employee WHERE emp_id=?";
     
     public static final String EMAIL_REGEX="^\\S+@\\S+\\.\\S+$";
     public static final String PHONE_REGEX="^\\d{10}$";
@@ -18,4 +20,12 @@ public class Constants {
     public static final String NO_EMPLOYEE_ERROR="employee doesn't Exist";
     public static final String NO_FILE="file not found";
     public static final String NOT_CSV="The file must be a csv file";
+    public static final String UPDATION_FAILED="Failed to update the employee";
+    public static final String DELETION_FAILED="Failed to delete the employee";
+    public static final String INSERTION_FAILED="failed to add employee";
+    public static final String SERVER_ERROR="Internal Server Error";
+    //public static final String ALREADY_EXIST=
+    public static final String INSERT_SUCCESS = "Inserted %d number of records";
+    public static final String NULL_ERROR="Employee cannot be null";
+    public static final String EMPLOYEE_EXIST="Employee id already exist";
 }

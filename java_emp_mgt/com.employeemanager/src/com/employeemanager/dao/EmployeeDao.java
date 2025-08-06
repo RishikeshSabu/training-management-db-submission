@@ -38,7 +38,7 @@ public class EmployeeDao {
 	    	}
 	    }
 	    catch (SQLException e) {
-	    	
+	    	System.out.println(e.getMessage());
 	    	throw new EmployeeDaoException(Constants.SAVE_EMPLOYEE_ERROR,e);
 	    	
 	    }
@@ -68,17 +68,47 @@ public class EmployeeDao {
 		}
 		
 	}
-	public boolean isEmployeeExist(int empId)throws EmployeeNotFoundException {
-		try(Connection con=DatabaseConnector.getConnection();
-				PreparedStatement statement=con.prepareStatement(Constants.SELECT_EMPLOYEE_BY_ID)){
-			statement.setInt(1, empId);
+	
+	public EmployeeDTO getEmployeeById(int employeeId) throws EmployeeDaoException {
+		try(Connection connection=DatabaseConnector.getConnection();
+				PreparedStatement statement=connection.prepareStatement(Constants.SELECT_EMPLOYEE_BY_ID)){
+			statement.setInt(1, employeeId);
 			try(ResultSet rs=statement.executeQuery()){
-				return rs.next();
+				if(rs.next()) {
+					return new EmployeeDTO(rs.getInt("emp_id"),rs.getString("first_name"),rs.getString("last_name"),rs.getString("email"),rs.getString("phone"),rs.getString("department"),rs.getString("salary"),rs.getString("join_date"));
+				}else return null;
 			}
+			
 		}catch(SQLException e) {
-			throw new EmployeeNotFoundException(Constants.NO_EMPLOYEE_ERROR,e);
-//			e.printStackTrace();
-//			return false;
+			throw new EmployeeDaoException(Constants.EMPLOYEE_FETCH_ERROR,e);
+		}
+	}
+	
+	public boolean updateEmployee(EmployeeDTO employee) throws EmployeeDaoException{
+		try(Connection connection=DatabaseConnector.getConnection();
+				PreparedStatement statement=connection.prepareStatement(Constants.UPDATE_EMPLOYEE)){
+			statement.setString(1,employee.getFirst_name());
+			statement.setString(2,employee.getLast_name());
+			statement.setString(3,employee.getEmail());
+			statement.setString(4,employee.getPhone());
+			statement.setString(5,employee.getDepartment());
+			statement.setString(6,employee.getSalary());
+			statement.setString(7,employee.getJoin_date());
+			statement.setInt(8,employee.getEmp_id());
+			int rowsUpdated=statement.executeUpdate();
+			return rowsUpdated>0;
+		}catch(SQLException e) {
+			throw new EmployeeDaoException(Constants.UPDATION_FAILED,e);
+		}
+	}
+	public boolean deleteEmployee(int employeeId) throws EmployeeDaoException{
+		try(Connection connection=DatabaseConnector.getConnection();
+				PreparedStatement statement=connection.prepareStatement(Constants.DELETE_EMPLOYEE)){
+			statement.setInt(1, employeeId);
+			int rowsDeleted=statement.executeUpdate();
+			return rowsDeleted>0;
+		}catch(SQLException e) {
+			throw new EmployeeDaoException(Constants.DELETION_FAILED,e);
 		}
 	}
 	
