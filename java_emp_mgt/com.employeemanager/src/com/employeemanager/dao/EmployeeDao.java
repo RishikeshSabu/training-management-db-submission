@@ -38,12 +38,9 @@ public class EmployeeDao {
 	    	}
 	    }
 	    catch (SQLException e) {
-	    	System.out.println("error inseting employee");
-	    	e.printStackTrace(); 
-	    	throw new EmployeeDaoException("Error in saving employee",e);
-	    	//System.out.println("error inseting employee");
-	        //e.printStackTrace(); 
-	        //return false;
+	    	
+	    	throw new EmployeeDaoException(Constants.SAVE_EMPLOYEE_ERROR,e);
+	    	
 	    }
 	}
 	public ArrayList<EmployeeDTO> getAllEmployees() throws EmployeeDaoException{
@@ -66,7 +63,7 @@ public class EmployeeDao {
 			}
 			return employees;
 		}catch(SQLException e) {
-			throw new EmployeeDaoException("Error in fetching employees",e);
+			throw new EmployeeDaoException(Constants.EMPLOYEE_FETCH_ERROR,e);
 			//return employees;
 		}
 		
@@ -79,7 +76,7 @@ public class EmployeeDao {
 				return rs.next();
 			}
 		}catch(SQLException e) {
-			throw new EmployeeNotFoundException("employee doesnt Exist",e);
+			throw new EmployeeNotFoundException(Constants.NO_EMPLOYEE_ERROR,e);
 //			e.printStackTrace();
 //			return false;
 		}

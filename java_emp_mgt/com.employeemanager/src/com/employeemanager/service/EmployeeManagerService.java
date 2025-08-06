@@ -2,14 +2,17 @@ package com.employeemanager.service;
 
 
 import com.employeemanager.util.ReadCSVFile;
+import com.employeemanager.constant.Constants;
 import com.employeemanager.dao.EmployeeDao;
 import com.employeemanager.dto.EmployeeDTO;
 import com.employeemanager.util.Validation;
 import com.employeemanager.exceptions.EmployeeServiceException;
 import com.employeemanager.exceptions.EmployeeNotFoundException;
 import com.employeemanager.exceptions.EmployeeDaoException;
+import com.employeemanager.exceptions.CSVFileAccessException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EmployeeManagerService {
 	public EmployeeDao dao=new EmployeeDao();
@@ -17,14 +20,15 @@ public class EmployeeManagerService {
 		
 		
 		int rowsInserted=0;
-		ArrayList<String[]> records=new ArrayList<>();
+		List<String[]> records=new ArrayList<>();
 		try {
 			records=ReadCSVFile.readCSV(filepath);
+			/* to know error
 			System.out.println("Total records read: " + records.size());
-
-		}catch(Exception e) {
-			//throw new EmployeeServiceException("Error in reading the file",e);
-			return 0;
+			*/
+		}catch(CSVFileAccessException e) {
+			throw new EmployeeServiceException(Constants.CSV_ERROR,e);
+			//return 0;
 		}
 		for (String[] record : records) {
 			try {
@@ -33,7 +37,7 @@ public class EmployeeManagerService {
 				String emailValidator = Validation.emailValidator(record[3]);
 			    String phoneValidator = Validation.phoneValidator(record[4]);
 			    String departmentValidator = Validation.departmentValidator(record[5]);
-			    //String joinDateValidator = Validation.joinDateValidator(record[7]);
+			    
 			    if (!firstNameValidator.equals("Valid") ||
 			    	    !lastNameValidator.equals("Valid") ||
 			    	    !emailValidator.equals("Valid") ||
@@ -50,11 +54,11 @@ public class EmployeeManagerService {
 				rowsInserted++;
 				
 			}catch(EmployeeNotFoundException e) {
-				throw new EmployeeServiceException("Employee doesnt exist",e);
+				throw new EmployeeServiceException(Constants.NO_EMPLOYEE_ERROR,e);
 				//return 0; 
 				
 			}catch(EmployeeDaoException e) {
-				throw new EmployeeServiceException("Failed to save employee",e);
+				throw new EmployeeServiceException(Constants.SAVE_EMPLOYEE_ERROR,e);
 			}
 			
 		}
@@ -66,7 +70,7 @@ public class EmployeeManagerService {
 		try {
 		return dao.getAllEmployees();
 		}catch(EmployeeDaoException e) {
-			throw new EmployeeServiceException("Failed to fetch All the employees",e);
+			throw new EmployeeServiceException(Constants.EMPLOYEE_FETCH_ERROR,e);
 		}
 	}
 }
