@@ -47,18 +47,18 @@ public class EmployeeManagerApp {
 		else System.out.println("Error : "+employeeResponse.getErrorMessage());
 		
 		//updateEmployee
-//		EmployeeDTO updateEmployee=new EmployeeDTO(101, "Akshay", "John", "akshayjohn@example.com", "8129457890", "Engineering", "75000", "2021-06-15");
-//		//EmployeeDTO updateEmployee=new EmployeeDTO(10, "Akshay", "John", "akshayjohn@example.com", "8129457890", "Engineering", "75000", "2021-06-15");-->emp_id doesnt exist exception
-//		Response<Integer> updateEmployeeResponse=controller.updateEmployee(updateEmployee);
-//		if(updateEmployeeResponse.getStatusCode()==200) System.out.println("updated Successfully");
-//		else System.out.println(updateEmployeeResponse.getErrorMessage());
+		EmployeeDTO updateEmployee=new EmployeeDTO(101, "Akshay", "John", "akshayjohn@example.com", "8129457890", "Engineering", "75000", "2021-06-15");
+		//EmployeeDTO updateEmployee=new EmployeeDTO(10, "Akshay", "John", "akshayjohn@example.com", "8129457890", "Engineering", "75000", "2021-06-15");-->emp_id doesnt exist exception
+		Response<Integer> updateEmployeeResponse=controller.updateEmployee(updateEmployee);
+		if(updateEmployeeResponse.getStatusCode()==200) System.out.println("updated Successfully");
+		else System.out.println(updateEmployeeResponse.getErrorMessage());
 		
 		//deleteEmployee
 		//int deleteEmployeeId=10-->AlreadyExistError
-//		int deleteEmployeeId=101;
-//		Response<Integer> deleteEmployeeResponse=controller.deleteEmployee(deleteEmployeeId);
-//		if(deleteEmployeeResponse.getStatusCode()==200) System.out.println("successfully deleted the employer");
-//		else System.out.println(deleteEmployeeResponse.getErrorMessage());
+		int deleteEmployeeId=101;
+		Response<Integer> deleteEmployeeResponse=controller.deleteEmployee(deleteEmployeeId);
+		if(deleteEmployeeResponse.getStatusCode()==200) System.out.println("successfully deleted the employer");
+		else System.out.println(deleteEmployeeResponse.getErrorMessage());
 		
 		
 	}
