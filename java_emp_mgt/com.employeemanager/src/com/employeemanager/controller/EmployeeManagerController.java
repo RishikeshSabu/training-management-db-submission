@@ -83,20 +83,33 @@ public class EmployeeManagerController {
 	public Response<List<String>> addEmployeesInBatch(List<EmployeeDTO> employeeList){
 		
 		try {
-			int index=0;
+			if (employeeList == null || employeeList.isEmpty()) {
+	            return new Response<>(400, Constants.EMPTY_EMPLOYEE);
+	        }
 			List<String> employeeAddedResult=new ArrayList<>();
-			if(employeeList==null||employeeList.isEmpty()) return new Response<>(400,Constants.EMPTY_EMPLOYEE);
 			int[] results=service.addEmployeesInBatch(employeeList);
-			for(int result:results) {
-				if (result==1) employeeAddedResult.add(String.format(Constants.EMPLOYEE_BATCH_SUCCESS,employeeList.get(index).getEmp_id()));
-				else employeeAddedResult.add(String.format(Constants.EMPLOYEE_BATCH_FAILURE,employeeList.get(index).getEmp_id()));
-				index++;
-			}
+			for (int i = 0; i < results.length; i++) {
+	            if (results[i] == 1) {
+	            	employeeAddedResult.add("Employee " + employeeList.get(i).getEmp_id() + " added successfully.");
+	            } else {
+	            	employeeAddedResult.add("Employee " + employeeList.get(i).getEmp_id() + " failed to add.");
+	            }
+	        }
 			return new Response<>(200,employeeAddedResult);
 		}catch(EmployeeServiceException e) {
 			return new Response<>(400,e.getMessage());
 		}
 		
+	}
+	
+	public Response<List<Integer>> transferEmployeesToBatch(List<Integer> employeeIds,String newDepartment){
+		try {
+			if(employeeIds==null||employeeIds.isEmpty()) return new Response<>(400,Constants.EMPTY_EMPLOYEE);
+			List<Integer> updatedIds=service.transferEmployeesToDepartment(employeeIds, newDepartment);
+			return new Response<>(200,updatedIds);
+		}catch(EmployeeServiceException e) {
+			return new Response<>(400,Constants.UPDATION_FAILED);
+		}
 	}
 	
 }

@@ -128,9 +128,42 @@ public class EmployeeDao {
 			}
 			return statement.executeBatch();
 		}catch(SQLException e) {
-			System.out.println(e.getMessage());
+			//System.out.println(e.getMessage());
 			throw new EmployeeDaoException("Failed to insert Batch",e);
 		}
+	}
+	public List<Integer> transferEmployeesToDepartment(List<Integer> employeeIds, String newDepartment) throws EmployeeDaoException{
+		 List<Integer> updatedIds = new ArrayList<>();
+		try(Connection connection=DatabaseConnector.getConnection()){
+			connection.setAutoCommit(false);
+			try(PreparedStatement statement=connection.prepareStatement(Constants.UPDATE_DEPARTMENT)){
+				 for (int employeeId : employeeIds) {
+		                statement.setString(1, newDepartment);
+		                statement.setInt(2, employeeId);
+		                statement.addBatch();
+		            }
+				 int[] results=statement.executeBatch();
+				 int index=0;
+				 for (int result : results) {
+		                if (result == 0) {
+		                    connection.rollback();
+		                    throw new EmployeeDaoException("Update failed for one or more employees. Transaction rolled back.");
+		                }else {
+		                	updatedIds.add(employeeIds.get(index));
+		                	index++;
+		                }
+		                
+		            }
+				 connection.commit();
+				 return updatedIds;
+			}catch (SQLException e) {
+	            connection.rollback();
+	            throw new EmployeeDaoException(Constants.UPDATION_FAILED,e);
+			}
+		}catch(SQLException e) {
+			throw new EmployeeDaoException(Constants.DATABASE_ERROR,e);
+		}
+		
 	}
 	
 }

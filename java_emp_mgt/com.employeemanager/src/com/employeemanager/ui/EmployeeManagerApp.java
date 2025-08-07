@@ -12,21 +12,21 @@ public class EmployeeManagerApp {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		EmployeeManagerController controller=new EmployeeManagerController();
-		String filepath="C:/Users/VICTUS/Desktop/training-management-db-submission/java_emp_mgt/employees.csv";
-		Response<String> response=controller.importEmployeestoDb(filepath);
-		if(response.getStatusCode()==200) System.out.println(response.getData());
-		if(response.getStatusCode()==400) System.out.println(response.getErrorMessage());
-////		
-//		//getAllEmployee
-		Response<List<EmployeeDTO>> employeesResponse=controller.getAllEmployees();
-		if(employeesResponse.getStatusCode()==200) {
-			List<EmployeeDTO> employees=employeesResponse.getData();
-			for(EmployeeDTO employee:employees) {
-				System.out.println(employee);
-			}
-			}else {
-				System.out.println("Error message : "+employeesResponse.getErrorMessage());
-			}
+//		String filepath="C:/Users/VICTUS/Desktop/training-management-db-submission/java_emp_mgt/employees.csv";
+//		Response<String> response=controller.importEmployeestoDb(filepath);
+//		if(response.getStatusCode()==200) System.out.println(response.getData());
+//		if(response.getStatusCode()==400) System.out.println(response.getErrorMessage());
+//////		
+////		//getAllEmployee
+//		Response<List<EmployeeDTO>> employeesResponse=controller.getAllEmployees();
+//		if(employeesResponse.getStatusCode()==200) {
+//			List<EmployeeDTO> employees=employeesResponse.getData();
+//			for(EmployeeDTO employee:employees) {
+//				System.out.println(employee);
+//			}
+//			}else {
+//				System.out.println("Error message : "+employeesResponse.getErrorMessage());
+//			}
 //		
 //		//addEmployee
 		//EmployeeDTO employee=new EmployeeDTO(101, "Rahul", "John", "rahul.john@example.com", "9123456789", "Engineering", "75000", "2021-06-15");-->Duplicate Key error
@@ -39,9 +39,9 @@ public class EmployeeManagerApp {
 //		}else {
 //			System.out.println("Error : "+addEmployeeResponse.getErrorMessage());
 //		}
-////		
-////		//getEmployeeById
-////		//int employeeId=10;-->empId doesnt exist
+		
+		//getEmployeeById
+		//int employeeId=10;-->empId doesnt exist
 //		int employeeId=101;
 //		Response<EmployeeDTO> employeeResponse=controller.getEmployeeById(employeeId);
 //		if(employeeResponse.getStatusCode()==200) System.out.println(employeeResponse.getData());
@@ -63,7 +63,7 @@ public class EmployeeManagerApp {
 		
 		//addEmployeesInBatch
 //		List<EmployeeDTO> employeeList = new ArrayList<>();
-//		employeeList.add(new EmployeeDTO(110, "Vibhav", "Narayan", "vibhav.narayan@gmail.com", "8125357098", "Computer Science", "60000", "2022-08-15"));
+//		employeeList.add(new EmployeeDTO(108, "Vibhav", "Narayan", "vibhav.narayan@gmail.com", "8125357098", "Computer Science", "60000", "2022-08-15"));
 //		employeeList.add(new EmployeeDTO(111, "Athul", "Babu", "athul.babu@gmail.com", "9876543211", "Computer Science", "60000", "2022-08-15"));
 //		employeeList.add(new EmployeeDTO(112, "Akash", "Babu", "akash@gmail.com", "9876543212", "Electrical", "60000", "2022-08-15"));
 //		
@@ -74,6 +74,21 @@ public class EmployeeManagerApp {
 //			}
 //		}else System.out.println(addEmployeesInBatchResponse.getErrorMessage());
 //		
+		
+		//transferEmployee
+		List<Integer> employeeIds = new ArrayList<>();
+        employeeIds.add(101);
+        employeeIds.add(102);
+        employeeIds.add(103);
+
+		Response<List<Integer>> transferEmployeeResponse=controller.transferEmployeesToBatch(employeeIds,"Mechanic Engineering");
+		if(transferEmployeeResponse.getStatusCode()==200) {
+			for(int id:transferEmployeeResponse.getData()) {
+				System.out.println("Employee id "+id+" successfully updated");
+			}
+		}else {
+			System.out.println(transferEmployeeResponse.getErrorMessage());
+		}
 	}
 	
 	

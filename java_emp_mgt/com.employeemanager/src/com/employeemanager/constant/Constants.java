@@ -8,6 +8,7 @@ public class Constants {
     public static final String GET_ALL_EMPLOYEES = "SELECT * FROM employee";
     public static final String UPDATE_EMPLOYEE="UPDATE employee SET first_name=?, last_name=?, email=?, phone=?, department=?, salary=?, join_date=? WHERE emp_id=?";
     public static final String DELETE_EMPLOYEE="DELETE FROM employee WHERE emp_id=?";
+    public static final String UPDATE_DEPARTMENT="UPDATE employee SET department=? WHERE emp_id=?";
     
     public static final String EMAIL_REGEX="^\\S+@\\S+\\.\\S+$";
     public static final String PHONE_REGEX="^\\d{10}$";
@@ -31,6 +32,7 @@ public class Constants {
     public static final String EMPTY_EMPLOYEE="Employee list is empty";
     public static final String EMPLOYEE_BATCH_SUCCESS= "Employee with employee id %d has been successfully added to the batch.";
     public static final String EMPLOYEE_BATCH_FAILURE= "Failed to add employee with employee id %d to the batch";
+    public static final String DATABASE_ERROR="Error in database operation";
 ;
 
 }
