@@ -28,4 +28,9 @@ public class Constants {
     public static final String INSERT_SUCCESS = "Inserted %d number of records";
     public static final String NULL_ERROR="Employee cannot be null";
     public static final String EMPLOYEE_EXIST="Employee id already exist";
+    public static final String EMPTY_EMPLOYEE="Employee list is empty";
+    public static final String EMPLOYEE_BATCH_SUCCESS= "Employee with employee id %d has been successfully added to the batch.";
+    public static final String EMPLOYEE_BATCH_FAILURE= "Failed to add employee with employee id %d to the batch";
+;
+
 }

@@ -80,4 +80,23 @@ public class EmployeeManagerController {
 		}
 	}
 	
+	public Response<List<String>> addEmployeesInBatch(List<EmployeeDTO> employeeList){
+		
+		try {
+			int index=0;
+			List<String> employeeAddedResult=new ArrayList<>();
+			if(employeeList==null||employeeList.isEmpty()) return new Response<>(400,Constants.EMPTY_EMPLOYEE);
+			int[] results=service.addEmployeesInBatch(employeeList);
+			for(int result:results) {
+				if (result==1) employeeAddedResult.add(String.format(Constants.EMPLOYEE_BATCH_SUCCESS,employeeList.get(index).getEmp_id()));
+				else employeeAddedResult.add(String.format(Constants.EMPLOYEE_BATCH_FAILURE,employeeList.get(index).getEmp_id()));
+				index++;
+			}
+			return new Response<>(200,employeeAddedResult);
+		}catch(EmployeeServiceException e) {
+			return new Response<>(400,e.getMessage());
+		}
+		
+	}
+	
 }

@@ -131,4 +131,36 @@ public class EmployeeManagerService {
 	        throw new EmployeeServiceException(e.getMessage(), e);
 	    }
 	}
+	
+	public int[] addEmployeesInBatch(List<EmployeeDTO> employeeList) throws EmployeeServiceException{
+		try {
+			for(EmployeeDTO employee: employeeList) {
+				String firstNameValidator = Validation.firstNameValidator(employee.getFirst_name());
+				String lastNameValidator = Validation.lastNameValidator(employee.getLast_name());
+				String emailValidator = Validation.emailValidator(employee.getEmail());
+				String phoneValidator = Validation.phoneValidator(employee.getPhone());
+				String departmentValidator = Validation.departmentValidator(employee.getDepartment());
+
+				if (!firstNameValidator.equals("Valid") ||
+				        !lastNameValidator.equals("Valid") ||
+				        !emailValidator.equals("Valid") ||
+				        !phoneValidator.equals("Valid") ||
+				        !departmentValidator.equals("Valid")) {
+				    throw new EmployeeServiceException("Invalid Credentials for employer with eployeeId"+employee.getFirst_name());
+				}
+				EmployeeDTO isExist=dao.getEmployeeById(employee.getEmp_id());
+				if(isExist!=null) {
+					throw new EmployeeAlreadyExistException("The employee id "+employee.getEmp_id()+" already exist in the table");
+				}
+			}
+			return dao.addEmployeesInBatch(employeeList);
+			
+		}catch(EmployeeDaoException e) {
+			System.out.println(e.getMessage());
+			throw new EmployeeServiceException("Error in adding employee to batch",e);
+		}
+		catch(EmployeeAlreadyExistException e) {
+			throw new EmployeeServiceException(e.getMessage(),e);
+		}
+	}
 }

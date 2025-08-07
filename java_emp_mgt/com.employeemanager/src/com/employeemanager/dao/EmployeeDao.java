@@ -112,8 +112,25 @@ public class EmployeeDao {
 			throw new EmployeeDaoException(Constants.DELETION_FAILED,e);
 		}
 	}
-//	public int[] addEmployeesInBatch(List<EmployeeDTO> employeeList) throws EmployeeDaoException{
-//		
-//	}
+	public int[] addEmployeesInBatch(List<EmployeeDTO> employeeList) throws EmployeeDaoException{
+		try(Connection connection=DatabaseConnector.getConnection();
+				PreparedStatement statement=connection.prepareStatement(Constants.INSERTEMPLOYEE)){
+			for(EmployeeDTO employee:employeeList) {
+				statement.setInt(1, employee.getEmp_id());
+				statement.setString(2, employee.getFirst_name());
+	    		statement.setString(3, employee.getLast_name());
+	    		statement.setString(4, employee.getEmail());
+	    		statement.setString(5, employee.getPhone());
+	    		statement.setString(6, employee.getDepartment());
+	    		statement.setString(7, employee.getSalary());
+	    		statement.setString(8, employee.getJoin_date());
+	    		statement.addBatch();
+			}
+			return statement.executeBatch();
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+			throw new EmployeeDaoException("Failed to insert Batch",e);
+		}
+	}
 	
 }
