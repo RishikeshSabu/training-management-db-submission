@@ -1,12 +1,14 @@
 package com.employeemanager.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.employeemanager.dto.Response;
 import com.employeemanager.service.EmployeeManagerService;
 import com.employeemanager.constant.Constants;
 import com.employeemanager.dto.EmployeeDTO;
 import com.employeemanager.exceptions.EmployeeServiceException;
+
 
 public class EmployeeManagerController {
 	private EmployeeManagerService service=new EmployeeManagerService();
@@ -26,9 +28,9 @@ public class EmployeeManagerController {
 		
 	}
 	
-	public Response<ArrayList<EmployeeDTO>> getAllEmployees(){
+	public Response<List<EmployeeDTO>> getAllEmployees(){
 		try {
-		ArrayList<EmployeeDTO> employees=service.getAllEmployees();
+		List<EmployeeDTO> employees=service.getAllEmployees();
 		if(employees==null) return new Response<>(500,Constants.SERVER_ERROR);
 		return new Response<>(200,employees);
 		}catch(EmployeeServiceException e) {

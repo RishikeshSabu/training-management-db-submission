@@ -62,7 +62,7 @@ public class EmployeeManagerService {
 		
 						
 	}
-	public ArrayList<EmployeeDTO> getAllEmployees() throws EmployeeServiceException{
+	public List<EmployeeDTO> getAllEmployees() throws EmployeeServiceException{
 		try {
 		return dao.getAllEmployees();
 		}catch(EmployeeDaoException e) {

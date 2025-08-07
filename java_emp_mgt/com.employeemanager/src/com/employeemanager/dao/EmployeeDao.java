@@ -14,6 +14,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.sql.ResultSet;
 
 
@@ -43,8 +44,8 @@ public class EmployeeDao {
 	    	
 	    }
 	}
-	public ArrayList<EmployeeDTO> getAllEmployees() throws EmployeeDaoException{
-		ArrayList<EmployeeDTO> employees=new ArrayList<>();
+	public List<EmployeeDTO> getAllEmployees() throws EmployeeDaoException{
+		List<EmployeeDTO> employees=new ArrayList<>();
 		String selectQuery=Constants.GET_ALL_EMPLOYEES;
 		try(Connection con=DatabaseConnector.getConnection();
 				PreparedStatement st=con.prepareStatement(selectQuery);
@@ -111,5 +112,8 @@ public class EmployeeDao {
 			throw new EmployeeDaoException(Constants.DELETION_FAILED,e);
 		}
 	}
+//	public int[] addEmployeesInBatch(List<EmployeeDTO> employeeList) throws EmployeeDaoException{
+//		
+//	}
 	
 }
