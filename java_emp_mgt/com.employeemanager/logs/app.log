@@ -1,0 +1,100 @@
+2025-08-08 17:36:14,288 - com.employeemanager.service.EmployeeManagerService - [loadAndSavetoDb] -(INFO) - {} records read from csv,{} - 
+2025-08-08 17:36:14,291 - com.employeemanager.service.EmployeeManagerService - [loadAndSavetoDb] -(DEBUG) - Starting to save 3 employees - 
+2025-08-08 17:36:15,339 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(DEBUG) - Executing query: SELECT emp_id,first_name,last_name,email,phone,department,salary,join_date FROM employee WHERE emp_id = ? - 
+2025-08-08 17:36:15,491 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(INFO) - Found the employee with employee Id 101 - 
+2025-08-08 17:36:15,497 - com.employeemanager.service.EmployeeManagerService - [loadAndSavetoDb] -(WARN) - Employee with employee id 101 already exists, skipping insert - 
+2025-08-08 17:36:15,532 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(DEBUG) - Executing query: SELECT emp_id,first_name,last_name,email,phone,department,salary,join_date FROM employee WHERE emp_id = ? - 
+2025-08-08 17:36:15,535 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(INFO) - Found the employee with employee Id 102 - 
+2025-08-08 17:36:15,536 - com.employeemanager.service.EmployeeManagerService - [loadAndSavetoDb] -(WARN) - Employee with employee id 102 already exists, skipping insert - 
+2025-08-08 17:36:15,556 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(DEBUG) - Executing query: SELECT emp_id,first_name,last_name,email,phone,department,salary,join_date FROM employee WHERE emp_id = ? - 
+2025-08-08 17:36:15,558 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(INFO) - Found the employee with employee Id 103 - 
+2025-08-08 17:36:15,559 - com.employeemanager.service.EmployeeManagerService - [loadAndSavetoDb] -(WARN) - Employee with employee id 103 already exists, skipping insert - 
+2025-08-08 17:36:15,559 - com.employeemanager.controller.EmployeeManagerController - [importEmployeestoDb] -(INFO) - Imported 0 employees from file: C:/Users/VICTUS/Desktop/training-management-db-submission/java_emp_mgt/employees.csv - 
+2025-08-08 17:36:15,573 - com.employeemanager.dao.EmployeeDao - [getAllEmployees] -(DEBUG) - Executing query: SELECT * FROM employee - 
+2025-08-08 17:36:15,603 - com.employeemanager.dao.EmployeeDao - [getAllEmployees] -(DEBUG) - Starting to iterate through resultset - 
+2025-08-08 17:36:15,604 - com.employeemanager.dao.EmployeeDao - [getAllEmployees] -(INFO) - Fetched 6 employees - 
+2025-08-08 17:36:15,605 - com.employeemanager.service.EmployeeManagerService - [getAllEmployees] -(INFO) - Fetched 6 employees - 
+2025-08-08 17:36:15,605 - com.employeemanager.controller.EmployeeManagerController - [getAllEmployees] -(INFO) - Fetched 6 employees - 
+2025-08-08 17:53:16,673 - com.employeemanager.controller.EmployeeManagerController - [importEmployeestoDb] -(WARN) - Invalid file extension for filepath: C:/Users/VICTUS/Desktop/training-management-db-submission/java_emp_mgt/employees.cs - 
+2025-08-08 17:53:16,675 - com.employeemanager.dao.EmployeeDao - [getAllEmployees] -(DEBUG) - Executing query: SELECT * FROM employee - 
+2025-08-08 17:53:17,168 - com.employeemanager.dao.EmployeeDao - [getAllEmployees] -(DEBUG) - Starting to iterate through resultset - 
+2025-08-08 17:53:17,170 - com.employeemanager.dao.EmployeeDao - [getAllEmployees] -(INFO) - Fetched 6 employees - 
+2025-08-08 17:53:17,176 - com.employeemanager.service.EmployeeManagerService - [getAllEmployees] -(INFO) - Fetched 6 employees - 
+2025-08-08 17:53:17,176 - com.employeemanager.controller.EmployeeManagerController - [getAllEmployees] -(INFO) - Fetched 6 employees - 
+2025-08-08 17:55:54,093 - com.employeemanager.service.EmployeeManagerService - [loadAndSavetoDb] -(INFO) - {} records read from csv,{} - 
+2025-08-08 17:55:54,096 - com.employeemanager.service.EmployeeManagerService - [loadAndSavetoDb] -(DEBUG) - Starting to save 3 employees - 
+2025-08-08 17:55:54,558 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(DEBUG) - Executing query: SELECT emp_id,first_name,last_name,email,phone,department,salary,join_date FROM employee WHERE emp_id = ? - 
+2025-08-08 17:55:54,570 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(INFO) - Found the employee with employee Id 101 - 
+2025-08-08 17:55:54,575 - com.employeemanager.service.EmployeeManagerService - [loadAndSavetoDb] -(WARN) - Employee with employee id 101 already exists, skipping insert - 
+2025-08-08 17:55:54,606 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(DEBUG) - Executing query: SELECT emp_id,first_name,last_name,email,phone,department,salary,join_date FROM employee WHERE emp_id = ? - 
+2025-08-08 17:55:54,608 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(INFO) - Found the employee with employee Id 102 - 
+2025-08-08 17:55:54,609 - com.employeemanager.service.EmployeeManagerService - [loadAndSavetoDb] -(WARN) - Employee with employee id 102 already exists, skipping insert - 
+2025-08-08 17:55:54,627 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(DEBUG) - Executing query: SELECT emp_id,first_name,last_name,email,phone,department,salary,join_date FROM employee WHERE emp_id = ? - 
+2025-08-08 17:55:54,629 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(INFO) - Found the employee with employee Id 103 - 
+2025-08-08 17:55:54,630 - com.employeemanager.service.EmployeeManagerService - [loadAndSavetoDb] -(WARN) - Employee with employee id 103 already exists, skipping insert - 
+2025-08-08 17:55:54,631 - com.employeemanager.controller.EmployeeManagerController - [importEmployeestoDb] -(INFO) - Imported 0 employees from file: C:/Users/VICTUS/Desktop/training-management-db-submission/java_emp_mgt/employees.csv - 
+2025-08-08 17:55:54,632 - com.employeemanager.dao.EmployeeDao - [getAllEmployees] -(DEBUG) - Executing query: SELECT * FROM employee - 
+2025-08-08 17:55:54,652 - com.employeemanager.dao.EmployeeDao - [getAllEmployees] -(DEBUG) - Starting to iterate through resultset - 
+2025-08-08 17:55:54,653 - com.employeemanager.dao.EmployeeDao - [getAllEmployees] -(INFO) - Fetched 6 employees - 
+2025-08-08 17:55:54,655 - com.employeemanager.service.EmployeeManagerService - [getAllEmployees] -(INFO) - Fetched 6 employees - 
+2025-08-08 17:55:54,655 - com.employeemanager.controller.EmployeeManagerController - [getAllEmployees] -(INFO) - Fetched 6 employees - 
+2025-08-08 17:55:54,678 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(DEBUG) - Executing query: SELECT emp_id,first_name,last_name,email,phone,department,salary,join_date FROM employee WHERE emp_id = ? - 
+2025-08-08 17:55:54,680 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(INFO) - Found the employee with employee Id 108 - 
+2025-08-08 17:55:54,681 - com.employeemanager.service.EmployeeManagerService - [addEmployee] -(WARN) - Employer with id 108 already exist - 
+2025-08-08 17:55:54,682 - com.employeemanager.service.EmployeeManagerService - [addEmployee] -(ERROR) - Employee already exists exception for id: 108 - 
+com.employeemanager.exceptions.EmployeeAlreadyExistException: The employee id 108 already exist in the table
+	at com.employeemanager.service.EmployeeManagerService.addEmployee(EmployeeManagerService.java:108) [bin/:?]
+	at com.employeemanager.controller.EmployeeManagerController.addEmployee(EmployeeManagerController.java:73) [bin/:?]
+	at com.employeemanager.ui.EmployeeManagerApp.main(EmployeeManagerApp.java:36) [bin/:?]
+2025-08-08 17:55:54,696 - com.employeemanager.controller.EmployeeManagerController - [addEmployee] -(ERROR) - Failed to add employee with id: 108 - 
+com.employeemanager.exceptions.EmployeeServiceException: The employee id 108 already exist in the table
+	at com.employeemanager.service.EmployeeManagerService.addEmployee(EmployeeManagerService.java:121) ~[bin/:?]
+	at com.employeemanager.controller.EmployeeManagerController.addEmployee(EmployeeManagerController.java:73) [bin/:?]
+	at com.employeemanager.ui.EmployeeManagerApp.main(EmployeeManagerApp.java:36) [bin/:?]
+Caused by: com.employeemanager.exceptions.EmployeeAlreadyExistException: The employee id 108 already exist in the table
+	at com.employeemanager.service.EmployeeManagerService.addEmployee(EmployeeManagerService.java:108) ~[bin/:?]
+	... 2 more
+2025-08-08 17:55:54,711 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(DEBUG) - Executing query: SELECT emp_id,first_name,last_name,email,phone,department,salary,join_date FROM employee WHERE emp_id = ? - 
+2025-08-08 17:55:54,713 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(INFO) - Found the employee with employee Id 101 - 
+2025-08-08 17:55:54,713 - com.employeemanager.service.EmployeeManagerService - [getEmployeebyId] -(INFO) - Found employee with id: 101 - 
+2025-08-08 17:55:54,714 - com.employeemanager.controller.EmployeeManagerController - [getEmployeeById] -(INFO) - Found employee with id: 101 - 
+2025-08-08 17:55:54,727 - com.employeemanager.dao.EmployeeDao - [updateEmployee] -(DEBUG) - Executing update for employee id 101 - 
+2025-08-08 17:55:54,956 - com.employeemanager.dao.EmployeeDao - [updateEmployee] -(INFO) - Updated employee id 101: rows updated = 1 - 
+2025-08-08 17:55:54,958 - com.employeemanager.service.EmployeeManagerService - [updateEmployee] -(INFO) - Updated employee with id: 101 - 
+2025-08-08 17:55:54,959 - com.employeemanager.controller.EmployeeManagerController - [updateEmployee] -(INFO) - Updated employee with id: 101 - 
+2025-08-08 17:55:54,978 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(DEBUG) - Executing query: SELECT emp_id,first_name,last_name,email,phone,department,salary,join_date FROM employee WHERE emp_id = ? - 
+2025-08-08 17:55:54,980 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(INFO) - Found the employee with employee Id 101 - 
+2025-08-08 17:55:54,993 - com.employeemanager.dao.EmployeeDao - [deleteEmployee] -(DEBUG) - Executing delete for employee id: 101 - 
+2025-08-08 17:55:55,012 - com.employeemanager.dao.EmployeeDao - [deleteEmployee] -(INFO) - Deleted employee id 101 - 
+2025-08-08 17:55:55,013 - com.employeemanager.service.EmployeeManagerService - [deleteEmployee] -(INFO) - Deleted employee with id: 101 - 
+2025-08-08 17:55:55,013 - com.employeemanager.controller.EmployeeManagerController - [deleteEmployee] -(INFO) - Deleted employee with id: 101 - 
+2025-08-08 17:55:55,014 - com.employeemanager.service.EmployeeManagerService - [addEmployeesInBatch] -(DEBUG) - Starting to add employees to validEmployee list - 
+2025-08-08 17:55:55,027 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(DEBUG) - Executing query: SELECT emp_id,first_name,last_name,email,phone,department,salary,join_date FROM employee WHERE emp_id = ? - 
+2025-08-08 17:55:55,028 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(INFO) - Found the employee with employee Id 108 - 
+2025-08-08 17:55:55,029 - com.employeemanager.service.EmployeeManagerService - [addEmployeesInBatch] -(WARN) - Employee with id 108 already exists - 
+2025-08-08 17:55:55,043 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(DEBUG) - Executing query: SELECT emp_id,first_name,last_name,email,phone,department,salary,join_date FROM employee WHERE emp_id = ? - 
+2025-08-08 17:55:55,045 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(INFO) - Found the employee with employee Id 111 - 
+2025-08-08 17:55:55,046 - com.employeemanager.service.EmployeeManagerService - [addEmployeesInBatch] -(WARN) - Employee with id 111 already exists - 
+2025-08-08 17:55:55,057 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(DEBUG) - Executing query: SELECT emp_id,first_name,last_name,email,phone,department,salary,join_date FROM employee WHERE emp_id = ? - 
+2025-08-08 17:55:55,059 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(INFO) - Found the employee with employee Id 112 - 
+2025-08-08 17:55:55,059 - com.employeemanager.service.EmployeeManagerService - [addEmployeesInBatch] -(WARN) - Employee with id 112 already exists - 
+2025-08-08 17:55:55,071 - com.employeemanager.dao.EmployeeDao - [addEmployeesInBatch] -(DEBUG) - Starting to add 0 employees to batch - 
+2025-08-08 17:55:55,074 - com.employeemanager.dao.EmployeeDao - [addEmployeesInBatch] -(INFO) - Batch insert completed - 
+2025-08-08 17:55:55,074 - com.employeemanager.service.EmployeeManagerService - [addEmployeesInBatch] -(INFO) - Batch insert completed with 0 employees - 
+2025-08-08 17:55:55,075 - com.employeemanager.controller.EmployeeManagerController - [addEmployeesInBatch] -(INFO) - Batch addEmployeesInBatch completed with 3 employees - 
+2025-08-08 17:55:55,075 - com.employeemanager.service.EmployeeManagerService - [transferEmployeesToDepartment] -(DEBUG) - Starting to add employees to validEmployeeList - 
+2025-08-08 17:55:55,087 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(DEBUG) - Executing query: SELECT emp_id,first_name,last_name,email,phone,department,salary,join_date FROM employee WHERE emp_id = ? - 
+2025-08-08 17:55:55,089 - com.employeemanager.service.EmployeeManagerService - [transferEmployeesToDepartment] -(WARN) - Employee id 101 does not exist; cannot transfer - 
+2025-08-08 17:55:55,090 - com.employeemanager.controller.EmployeeManagerController - [transferEmployeesToBatch] -(ERROR) - Failed to transfer employees to department 'Mechanic Engineering' - 
+com.employeemanager.exceptions.EmployeeServiceException: Employee id101 doesnt exist
+	at com.employeemanager.service.EmployeeManagerService.transferEmployeesToDepartment(EmployeeManagerService.java:254) ~[bin/:?]
+	at com.employeemanager.controller.EmployeeManagerController.transferEmployeesToBatch(EmployeeManagerController.java:165) [bin/:?]
+	at com.employeemanager.ui.EmployeeManagerApp.main(EmployeeManagerApp.java:84) [bin/:?]
+2025-08-08 17:56:32,234 - com.employeemanager.service.EmployeeManagerService - [transferEmployeesToDepartment] -(DEBUG) - Starting to add employees to validEmployeeList - 
+2025-08-08 17:56:32,653 - com.employeemanager.dao.EmployeeDao - [getEmployeeById] -(DEBUG) - Executing query: SELECT emp_id,first_name,last_name,email,phone,department,salary,join_date FROM employee WHERE emp_id = ? - 
+2025-08-08 17:56:32,668 - com.employeemanager.service.EmployeeManagerService - [transferEmployeesToDepartment] -(WARN) - Employee id 101 does not exist; cannot transfer - 
+2025-08-08 17:56:32,668 - com.employeemanager.controller.EmployeeManagerController - [transferEmployeesToBatch] -(ERROR) - Failed to transfer employees to department 'Mechanic Engineering' - 
+com.employeemanager.exceptions.EmployeeServiceException: Employee id101 doesnt exist
+	at com.employeemanager.service.EmployeeManagerService.transferEmployeesToDepartment(EmployeeManagerService.java:254) ~[bin/:?]
+	at com.employeemanager.controller.EmployeeManagerController.transferEmployeesToBatch(EmployeeManagerController.java:165) [bin/:?]
+	at com.employeemanager.ui.EmployeeManagerApp.main(EmployeeManagerApp.java:84) [bin/:?]

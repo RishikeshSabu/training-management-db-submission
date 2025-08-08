@@ -1,5 +1,5 @@
 # Ignore Eclipse project settings
-*.log
+
 *.lock
 *.lock_info
 .metadata/
