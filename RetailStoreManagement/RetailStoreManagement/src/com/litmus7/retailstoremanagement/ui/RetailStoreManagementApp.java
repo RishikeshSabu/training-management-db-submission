@@ -32,9 +32,9 @@ public class RetailStoreManagementApp {
 		//print response
 		
 		//sortProduct
-		PriceComparatorAsc priceComparatorAsc=new PriceComparatorAsc();
-		PriceComparatorDesc priceComparatorDesc= new PriceComparatorDesc();
-		NameComparator nameComparator=new NameComparator();
+		String priceSortAsc="Sort the product by their price in ascending order";
+		String priceSortDesc="Sort the product by their price in descending order";
+		String NameSortAsc="Sort the product by their name";
 		//ask user to pick the comparator needed
 		Response<List<Product>> sortProductResponse=controller.sortProducts(null,null);
 		//print response

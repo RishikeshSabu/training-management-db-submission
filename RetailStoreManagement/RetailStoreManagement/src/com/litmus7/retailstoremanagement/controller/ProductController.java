@@ -29,7 +29,9 @@ public class ProductController {
 		return null;
 		
 	}
-	public Response<List<Product>> sortProducts(List<Product> products,Comparator<Product> comparator){
+	public Response<List<Product>> sortProducts(List<Product> products,String condition){
+		//create objects of PriceComparatorAsc,PriceComparatorDesc,NameComparator based on condition
+		//pass the created object as argument of sortProduct from service
 		//sortProduct function from service
 		//return response
 		return null;
