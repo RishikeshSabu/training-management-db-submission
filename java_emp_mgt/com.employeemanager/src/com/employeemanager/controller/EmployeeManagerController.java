@@ -8,6 +8,7 @@ import com.employeemanager.service.EmployeeManagerService;
 import com.employeemanager.constant.Constants;
 import com.employeemanager.dto.EmployeeDTO;
 import com.employeemanager.exceptions.EmployeeServiceException;
+import com.employeemanager.util.LoadErrorMessage;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,30 +17,31 @@ public class EmployeeManagerController {
 	private static final Logger logger=LogManager.getLogger(EmployeeManagerController.class);
 	private EmployeeManagerService service=new EmployeeManagerService();
 	
-	public Response<String> importEmployeestoDb(String filepath){
+	public Response<Object> importEmployeestoDb(String filepath){
 		logger.trace("Entering importEmployeestoDb with filepath: {}", filepath);
 		int rowsInserted;
 		if(filepath==null||filepath.trim().isEmpty()) {
 			logger.warn("Filepath is null or empty");
-			return new Response<>(400,Constants.NO_FILE);
+			return new Response<>(400,"FILE-PATH-ERROR",Constants.NO_FILE);
 		}
 		try {
 		if(!filepath.toLowerCase().endsWith(".csv")) {
 			logger.warn("Invalid file extension for filepath: {}", filepath);
-			return new Response<>(400,Constants.NOT_CSV);
+			return new Response<>(400,"FILEPATH-ERROR",Constants.NOT_CSV);
 		}
 		rowsInserted=service.loadAndSavetoDb(filepath);
+		//System.out.println(rowsInserted);
 		logger.info("Imported {} employees from file: {}", rowsInserted, filepath);
         logger.trace("Exiting importEmployeestoDb");
-		return new Response<>(200,null,String.format(Constants.INSERT_SUCCESS,rowsInserted));
+		return new Response<>(200,rowsInserted);
 		}catch(EmployeeServiceException e) {
 			logger.error("Error importing employees from file: {}", filepath, e);
-			return new Response<>(400,e.getMessage());
+			return new Response<>(400,e.getErrorCode(),e.getMessage());
 		}catch(Exception e) {
 			logger.error("Unexpected error importing employees from file: {}", filepath, e);
 			return new Response<>(400,e.getMessage());
 		}
-		
+	
 	}
 	
 	public Response<List<EmployeeDTO>> getAllEmployees(){
@@ -48,17 +50,17 @@ public class EmployeeManagerController {
 		List<EmployeeDTO> employees=service.getAllEmployees();
 		if(employees==null) {
 			logger.error("getAllEmployees returned null");
-			return new Response<>(500,Constants.SERVER_ERROR);
+			return new Response<>(500,"EMP-9",Constants.SERVER_ERROR);
 		}
 		logger.info("Fetched {} employees", employees.size());
         logger.trace("Exiting getAllEmployees");
 		return new Response<>(200,employees);
 		}catch(EmployeeServiceException e) {
 			logger.error("Error fetching all employees", e);
-			return new Response<>(400,e.getMessage());
+			return new Response<>(400,e.getErrorCode(),e.getMessage());
 		}catch(Exception e) {
 			logger.error("Unexpected error in fetching employees",e);
-			return new Response<>(400,e.getMessage());
+			return new Response<>(400,e.getMessage(),null);
 		}
 	}
 	
@@ -67,7 +69,7 @@ public class EmployeeManagerController {
 		try {
 			if(employee==null) {
 				logger.warn("addEmployee called with null employee");
-				return new Response<>(400,Constants.NULL_ERROR);
+				return new Response<>(400,Constants.NULL_ERROR,null);
 			}
 			//if(service.getEmployeebyId(employee.getEmp_id())!=null) return new Response<>(400,Constants.EMPLOYEE_EXIST);
 			boolean result=service.addEmployee(employee);
@@ -77,10 +79,10 @@ public class EmployeeManagerController {
 			return new Response<>(200,employeeId);
 		}catch(EmployeeServiceException e) {
 			logger.error("Failed to add employee with id: {}", employee.getEmp_id(), e);
-			return new Response<>(400,e.getMessage());
+			return new Response<>(400,e.getErrorCode(),e.getMessage());
 		}catch(Exception e) {
 			logger.error("Unexpected error adding employee", e);
-			return new Response<>(400,e.getMessage());
+			return new Response<>(400,e.getMessage(),null);
 		}
 	}
 		
@@ -93,7 +95,7 @@ public class EmployeeManagerController {
 			return new Response<>(200,employee);
 		}catch(EmployeeServiceException e) {
 			logger.error("Error fetching employee by id: {}", employeeId, e);
-			return new Response<>(400,e.getMessage());
+			return new Response<>(400,e.getErrorCode(),e.getMessage());
 		}
 	}
 	
@@ -106,7 +108,7 @@ public class EmployeeManagerController {
 			return new Response<>(200,employee.getEmp_id());
 		}catch(EmployeeServiceException e){
 			logger.error("Failed to update employee with id: {}", employee != null ? employee.getEmp_id() : null, e);
-			return new Response<>(400,e.getMessage());
+			return new Response<>(400,e.getErrorCode(),e.getMessage());
 		}
 	}
 	
@@ -119,10 +121,10 @@ public class EmployeeManagerController {
 			return new Response<>(200,employeeId);
 		}catch(EmployeeServiceException e) {
 			logger.error("Failed to delete employee with id: {}", employeeId, e);
-			return new Response<>(400,e.getMessage());
+			return new Response<>(400,e.getErrorCode(),e.getMessage());
 		}catch(Exception e) {
 			logger.error("Unexpected error occured in deleteing the employee with id {}",employeeId,e);
-			return new Response<>(400,e.getMessage());
+			return new Response<>(400,e.getMessage(),null);
 		}
 	}
 	
@@ -131,7 +133,7 @@ public class EmployeeManagerController {
 		try {
 			if (employeeList == null || employeeList.isEmpty()) {
 				logger.warn("addEmployeesInBatch called with null or empty list");
-	            return new Response<>(400, Constants.EMPTY_EMPLOYEE);
+	            return new Response<>(400,"EMP-LIST-EMPTY", Constants.EMPTY_EMPLOYEE);
 	        }
 			List<String> employeeAddedResult=new ArrayList<>();
 			int[] results=service.addEmployeesInBatch(employeeList);
@@ -147,10 +149,10 @@ public class EmployeeManagerController {
 			return new Response<>(200,employeeAddedResult);
 		}catch(EmployeeServiceException e) {
 			logger.error("Failed during batch addEmployeesInBatch", e);
-			return new Response<>(400,e.getMessage());
+			return new Response<>(400,e.getErrorCode(),e.getMessage());
 		}catch(Exception e) {
 			logger.error("Unexpected error occured in adding {} employees to batch",employeeList.size(),e);
-			return new Response<>(400,e.getMessage());
+			return new Response<>(400,"ERROR-UNXPECTED",e.getMessage());
 		}
 		
 	}
@@ -160,7 +162,7 @@ public class EmployeeManagerController {
 		try {
 			if(employeeIds==null||employeeIds.isEmpty()) {
 				logger.warn("transferEmployeesToBatch called with null or empty employeeIds");
-				return new Response<>(400,Constants.EMPTY_EMPLOYEE);
+				return new Response<>(400,"EMP-LIST-EMPTY",Constants.EMPTY_EMPLOYEE);
 			}
 			List<Integer> updatedIds=service.transferEmployeesToDepartment(employeeIds, newDepartment);
 			logger.info("Transferred {} employees to department '{}'", updatedIds.size(), newDepartment);
@@ -168,10 +170,10 @@ public class EmployeeManagerController {
 			return new Response<>(200,updatedIds);
 		}catch(EmployeeServiceException e) {
 			logger.error("Failed to transfer employees to department '{}'", newDepartment, e);
-			return new Response<>(400,Constants.UPDATION_FAILED);
+			return new Response<>(400,"EMP-11",LoadErrorMessage.getErrorMessage("EMP-11"));
 		}catch(Exception e) {
 			logger.error("Unxpected error occured in updating the department of employees", e);
-			return new Response<>(400,e.getMessage());
+			return new Response<>(400,"ERROR-UNXPECTED",e.getMessage());
 		}
 	}
 	

@@ -10,6 +10,7 @@ import com.employeemanager.exceptions.EmployeeNotFoundException;
 import com.employeemanager.exceptions.EmployeeDaoException;
 import com.employeemanager.exceptions.CSVFileAccessException;
 import com.employeemanager.exceptions.EmployeeAlreadyExistException;
+import com.employeemanager.util.LoadErrorMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +30,12 @@ public class EmployeeManagerService {
 		try {
 			records = ReadCSVFile.readCSV(filepath);
 			logger.info("{} records read from csv,{}");
-			/*
-			 * to know error System.out.println("Total records read: " + records.size());
-			 */
+			
+			System.out.println("Total records read: " + records.size());
+
 		} catch (CSVFileAccessException e) {
 			logger.error("Error reading CSV file from path: {}", filepath, e);
-			throw new EmployeeServiceException(Constants.CSV_ERROR, e);
+			throw new EmployeeServiceException("Emp-8", e);
 			// return 0;
 		}
 		logger.debug("Starting to save {} employees", records.size());
@@ -65,11 +66,13 @@ public class EmployeeManagerService {
 				rowsInserted++;
 			} catch (EmployeeDaoException e) {
 				logger.error("Failed to save employee from CSV record: emp_id={}", record[0], e);
-				throw new EmployeeServiceException(Constants.SAVE_EMPLOYEE_ERROR, e);
+				System.out.println(e.getMessage());
+				throw new EmployeeServiceException(e.getErrorCode(),e.getMessage(), e);
 			}
 
 		}
 		logger.trace("Exiting loadAndSavetoDb, total rows inserted: {}", rowsInserted);
+		
 		return rowsInserted;
 
 	}
@@ -83,7 +86,7 @@ public class EmployeeManagerService {
 			return employees;
 		} catch (EmployeeDaoException e) {
 			logger.error(Constants.EMPLOYEE_FETCH_ERROR, e);
-			throw new EmployeeServiceException(Constants.EMPLOYEE_FETCH_ERROR, e);
+			throw new EmployeeServiceException(e.getErrorCode(), e.getMessage(), e);
 		}
 	}
 
@@ -100,12 +103,12 @@ public class EmployeeManagerService {
 					|| !emailValidator.equals("Valid") || !phoneValidator.equals("Valid")
 					|| !departmentValidator.equals("Valid")) {
 				logger.trace("Entering addEmployee with emp_id: {}", employee.getEmp_id());
-				throw new EmployeeServiceException("Invalid Credentials");
+				throw new EmployeeServiceException("EMP-INVALID-1","Invalid Credentials");
 			}
 			EmployeeDTO isExist = dao.getEmployeeById(employee.getEmp_id());
 			if (isExist != null) {
 				logger.warn("Employer with id {} already exist", employee.getEmp_id());
-				throw new EmployeeAlreadyExistException(
+				throw new EmployeeAlreadyExistException("EMP-12",
 						"The employee id " + employee.getEmp_id() + " already exist in the table");
 			}
 
@@ -115,10 +118,10 @@ public class EmployeeManagerService {
 			return true;
 		} catch (EmployeeDaoException e) {
 			logger.error("Failed to add employee with id: {}", employee.getEmp_id(), e);
-			throw new EmployeeServiceException(Constants.INSERTION_FAILED, e);
+			throw new EmployeeServiceException(e.getErrorCode(),e.getMessage(), e);
 		} catch (EmployeeAlreadyExistException e) {
 			logger.error("Employee already exists exception for id: {}", employee.getEmp_id(), e);
-			throw new EmployeeServiceException(e.getMessage(), e);
+			throw new EmployeeServiceException(e.getErrorCode(),e.getMessage(), e);
 		}
 	}
 
@@ -128,7 +131,7 @@ public class EmployeeManagerService {
 			EmployeeDTO employee = dao.getEmployeeById(employeeId);
 			if (employee == null) {
 				logger.warn("Employee not found with id: {}", employeeId);
-				throw new EmployeeNotFoundException(
+				throw new EmployeeNotFoundException("EMP-3",
 						"The employer with employee id " + employeeId + " doesnt exist in the table");
 			}
 			logger.info("Found employee with id: {}", employeeId);
@@ -136,10 +139,10 @@ public class EmployeeManagerService {
 			return employee;
 		} catch (EmployeeDaoException e) {
 			logger.error("Error fetching employee with id: {}", employeeId, e);
-			throw new EmployeeServiceException(e.getMessage(), e);
+			throw new EmployeeServiceException(e.getErrorCode(),e.getMessage(), e);
 		} catch (EmployeeNotFoundException e) {
 			logger.error("Employee not found exception for id: {}", employeeId, e);
-			throw new EmployeeServiceException(e.getMessage(), e);
+			throw new EmployeeServiceException(e.getErrorCode(),e.getMessage(), e);
 		}
 	}
 
@@ -149,7 +152,7 @@ public class EmployeeManagerService {
 			boolean result = dao.updateEmployee(employee);
 			if (!result) {
 				logger.warn("Update failed — employee not found with id: {}", employee.getEmp_id());
-				throw new EmployeeNotFoundException(
+				throw new EmployeeNotFoundException("EMP-3",
 						"The employer with employee id " + employee.getEmp_id() + " doesnt exist in the table");
 			}
 			logger.info("Updated employee with id: {}", employee.getEmp_id());
@@ -157,10 +160,10 @@ public class EmployeeManagerService {
 			return result;
 		} catch (EmployeeDaoException e) {
 			logger.error("Error updating employee with id: {}", employee.getEmp_id(), e);
-			throw new EmployeeServiceException(e.getMessage(), e);
+			throw new EmployeeServiceException(e.getErrorCode(),e.getMessage(), e);
 		} catch (EmployeeNotFoundException e) {
 			logger.error("Employee not found exception for id: {}", employee.getEmp_id(), e);
-			throw new EmployeeServiceException(e.getMessage(), e);
+			throw new EmployeeServiceException(e.getErrorCode(),e.getMessage(), e);
 		}
 	}
 
@@ -170,7 +173,7 @@ public class EmployeeManagerService {
 			EmployeeDTO isExist = dao.getEmployeeById(employeeId);
 			if (isExist == null) {
 				logger.warn("The employee with id {} doesnt exist", employeeId);
-				throw new EmployeeServiceException(Constants.NO_EMPLOYEE_ERROR);
+				throw new EmployeeServiceException("EMP-3","Employee with id"+employeeId+"doesnt exist");
 			}
 			boolean isDeleted = dao.deleteEmployee(employeeId);
 			logger.info("Deleted employee with id: {}", employeeId);
@@ -178,7 +181,7 @@ public class EmployeeManagerService {
 			return isDeleted;
 		} catch (EmployeeDaoException e) {
 			logger.error("Error deleting employee with id: {}", employeeId, e);
-			throw new EmployeeServiceException(e.getMessage(), e);
+			throw new EmployeeServiceException(e.getErrorCode(),e.getMessage(), e);
 		}
 	}
 
@@ -211,7 +214,7 @@ public class EmployeeManagerService {
 				validEmployees.add(employee);
 			} catch (EmployeeDaoException e) {
 				logger.error("Error checking existence for employee id: {}", employee.getEmp_id(), e);
-
+				
 				validEmployees.add(null);
 			}
 		}
@@ -226,7 +229,7 @@ public class EmployeeManagerService {
 			daoResults = dao.addEmployeesInBatch(insertList);
 		} catch (EmployeeDaoException e) {
 			logger.error("Failed during batch insert", e);
-			throw new EmployeeServiceException("Failed during batch insert", e);
+			throw new EmployeeServiceException("EMP-10","Failed during batch insert", e);
 		}
 		int[] finalResults = new int[validEmployees.size()];
 		int daoIndex = 0;
@@ -251,7 +254,7 @@ public class EmployeeManagerService {
 				EmployeeDTO isExist = dao.getEmployeeById(employeeId);
 				if (isExist == null) {
 					logger.warn("Employee id {} does not exist; cannot transfer", employeeId);
-					throw new EmployeeServiceException("Employee id" + employeeId + " doesnt exist");
+					throw new EmployeeServiceException("EMP-3","Employee id" + employeeId + " doesnt exist");
 				}
 					
 				
@@ -263,7 +266,7 @@ public class EmployeeManagerService {
 			return updated;
 		} catch (EmployeeDaoException e) {
 			logger.error("Failed to transfer employees to department '{}'", newDepartment, e);
-			throw new EmployeeServiceException("failed to transfer departments.", e);
+			throw new EmployeeServiceException("EMP-11","failed to transfer departments.", e);
 		}
 
 	}

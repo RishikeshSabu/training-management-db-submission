@@ -30,13 +30,13 @@
     <Loggers>
         
         <Logger name="com.employeemanager" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
+            <!-- <AppenderRef ref="Console"/> -->
             <AppenderRef ref="FileLogger"/>
         </Logger>
 
         <!-- Root Logger -->
         <Root level="info">
-            <AppenderRef ref="Console"/>
+            <!-- <AppenderRef ref="Console"/> -->
             <AppenderRef ref="FileLogger"/>
         </Root>
     </Loggers>

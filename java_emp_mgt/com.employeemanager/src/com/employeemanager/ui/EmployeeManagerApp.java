@@ -13,9 +13,12 @@ public class EmployeeManagerApp {
 		// TODO Auto-generated method stub
 		EmployeeManagerController controller=new EmployeeManagerController();
 		String filepath="C:/Users/VICTUS/Desktop/training-management-db-submission/java_emp_mgt/employees.csv";
-		Response<String> response=controller.importEmployeestoDb(filepath);
-		if(response.getStatusCode()==200) System.out.println(response.getData());
-		if(response.getStatusCode()==400) System.out.println(response.getErrorMessage());
+		Response<Object> response=controller.importEmployeestoDb(filepath);
+		if(response.getStatusCode()==200) {
+			//System.out.println(response.getStatusCode());
+			System.out.println("Inserted "+response.getData()+ " number of employers");
+		}
+		if(response.getStatusCode()==400) System.out.println("Error Code :"+response.getErrorCode()+"Message :"+response.getErrorMessage());
 		
 		//getAllEmployee
 		Response<List<EmployeeDTO>> employeesResponse=controller.getAllEmployees();
@@ -25,7 +28,7 @@ public class EmployeeManagerApp {
 				System.out.println(employee);
 			}
 			}else {
-				System.out.println("Error message : "+employeesResponse.getErrorMessage());
+				System.out.println("Error Code :"+response.getErrorCode()+"Message :"+response.getErrorMessage());
 			}
 
 		//addEmployee
@@ -36,7 +39,8 @@ public class EmployeeManagerApp {
 		if(addEmployeeResponse.getStatusCode()==200) {
 			System.out.println("Employer with employee_id "+addEmployeeResponse.getData()+" inserted succesfully");
 		}else {
-			System.out.println("Error : "+addEmployeeResponse.getErrorMessage());
+			System.out.println("Error code: "+addEmployeeResponse.getErrorCode()+" message : "+addEmployeeResponse.getErrorMessage());
+			//System.out.println("Error : "+addEmployeeResponse.getErrorMessage());
 		}
 //		
 //		//getEmployeeById
@@ -44,23 +48,23 @@ public class EmployeeManagerApp {
 		int employeeId=101;
 		Response<EmployeeDTO> employeeResponse=controller.getEmployeeById(employeeId);
 		if(employeeResponse.getStatusCode()==200) System.out.println(employeeResponse.getData());
-		else System.out.println("Error : "+employeeResponse.getErrorMessage());
-		
-		//updateEmployee
+		else System.out.println("Error code : "+employeeResponse.getErrorCode()+"Message : "+employeeResponse.getErrorMessage());
+//		
+//		//updateEmployee
 		EmployeeDTO updateEmployee=new EmployeeDTO(101, "Akshay", "John", "akshayjohn@example.com", "8129457890", "Engineering", "75000", "2021-06-15");
 		//EmployeeDTO updateEmployee=new EmployeeDTO(10, "Akshay", "John", "akshayjohn@example.com", "8129457890", "Engineering", "75000", "2021-06-15");-->emp_id doesnt exist exception
 		Response<Integer> updateEmployeeResponse=controller.updateEmployee(updateEmployee);
 		if(updateEmployeeResponse.getStatusCode()==200) System.out.println("updated Successfully");
-		else System.out.println(updateEmployeeResponse.getErrorMessage());
-//		
+		else System.out.println("Error code : "+updateEmployeeResponse.getErrorCode()+"message : "+updateEmployeeResponse.getErrorMessage());
+//////		
 		//deleteEmployee
-		//int deleteEmployeeId=10-->AlreadyExistError
+		//int deleteEmployeeId=10;-->Already exist
 		int deleteEmployeeId=101;
 		Response<Integer> deleteEmployeeResponse=controller.deleteEmployee(deleteEmployeeId);
 		if(deleteEmployeeResponse.getStatusCode()==200) System.out.println("successfully deleted the employer");
-		else System.out.println(deleteEmployeeResponse.getErrorMessage());
+		else System.out.println("Error Code : "+deleteEmployeeResponse.getErrorCode()+"message : "+ deleteEmployeeResponse.getErrorMessage());
 		
-		//addEmployeesInBatch
+//		//addEmployeesInBatch
 		List<EmployeeDTO> employeeList = new ArrayList<>();
 		employeeList.add(new EmployeeDTO(108, "Vibhav", "Narayan", "vibhav.narayan@gmail.com", "8125357098", "Computer Science", "60000", "2022-08-15"));
 		employeeList.add(new EmployeeDTO(111, "Athul", "Babu", "athul.babu@gmail.com", "9876543211", "Computer Science", "60000", "2022-08-15"));
@@ -71,14 +75,14 @@ public class EmployeeManagerApp {
 			for (String data:addEmployeesInBatchResponse.getData()) {
 				System.out.println(data);
 			}
-		}else System.out.println(addEmployeesInBatchResponse.getErrorMessage());
-	
-		
-		//transferEmployee
+		}else System.out.println("Error Code : "+addEmployeesInBatchResponse.getErrorCode()+"Message : "+addEmployeesInBatchResponse.getErrorMessage());
+//	
+//		
+//		//transferEmployee
 		List<Integer> employeeIds = new ArrayList<>();
-        employeeIds.add(101);
         employeeIds.add(102);
         employeeIds.add(103);
+        employeeIds.add(112);
 
 		Response<List<Integer>> transferEmployeeResponse=controller.transferEmployeesToBatch(employeeIds,"Mechanic Engineering");
 		if(transferEmployeeResponse.getStatusCode()==200) {
@@ -86,7 +90,7 @@ public class EmployeeManagerApp {
 				System.out.println("Employee id "+id+" successfully updated");
 			}
 		}else {
-			System.out.println(transferEmployeeResponse.getErrorMessage());
+			System.out.println("Error code : "+transferEmployeeResponse+"Message : "+transferEmployeeResponse.getErrorMessage());
 		}
 	}
 	

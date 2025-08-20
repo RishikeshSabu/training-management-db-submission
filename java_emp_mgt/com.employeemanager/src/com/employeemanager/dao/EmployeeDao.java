@@ -8,6 +8,7 @@ import com.employeemanager.dto.EmployeeDTO;
 import com.employeemanager.util.DatabaseConnector;
 import com.employeemanager.constant.Constants;
 import com.employeemanager.exceptions.EmployeeDaoException;
+import com.employeemanager.util.LoadErrorMessage;
 
 
 
@@ -45,7 +46,7 @@ public class EmployeeDao {
 	    }
 	    catch (SQLException e) {
 	    	logger.error("Error saving employee with id {}", employee.getEmp_id(), e);
-	    	throw new EmployeeDaoException(Constants.SAVE_EMPLOYEE_ERROR,e);
+	    	throw new EmployeeDaoException("Emp-1",e);
 	    	
 	    }
 	}
@@ -75,7 +76,7 @@ public class EmployeeDao {
 			return employees;
 		}catch(SQLException e) {
 			logger.error("Error in fetching employees",e);
-			throw new EmployeeDaoException(Constants.EMPLOYEE_FETCH_ERROR,e);
+			throw new EmployeeDaoException("Emp-2",e);
 			//return employees;
 		}
 		
@@ -99,7 +100,7 @@ public class EmployeeDao {
 			
 		}catch(SQLException e) {
 			logger.error("Error in getting the detail of empployee with employee id {}",employeeId,e);
-			throw new EmployeeDaoException(Constants.EMPLOYEE_FETCH_ERROR,e);
+			throw new EmployeeDaoException("Emp-3",e);
 		}
 	}
 	
@@ -122,7 +123,7 @@ public class EmployeeDao {
 			return rowsUpdated>0;
 		}catch(SQLException e) {
 			logger.error("Error updating employee with id {}", employee.getEmp_id(), e);
-			throw new EmployeeDaoException(Constants.UPDATION_FAILED,e);
+			throw new EmployeeDaoException("Emp-4",e);
 		}
 	}
 	public boolean deleteEmployee(int employeeId) throws EmployeeDaoException{
@@ -137,7 +138,7 @@ public class EmployeeDao {
 			return rowsDeleted>0;
 		}catch(SQLException e) {
 			logger.error("Error deleting employee with id {}", employeeId, e);
-			throw new EmployeeDaoException(Constants.DELETION_FAILED,e);
+			throw new EmployeeDaoException("Emp-5",e);
 		}
 	}
 	public int[] addEmployeesInBatch(List<EmployeeDTO> employeeList) throws EmployeeDaoException{
@@ -165,7 +166,7 @@ public class EmployeeDao {
 		}catch(SQLException e) {
 			//System.out.println(e.getMessage());
 			logger.error("Failed to insert batch", e);
-			throw new EmployeeDaoException("Failed to insert Batch",e);
+			throw new EmployeeDaoException("Emp-10",e);
 		}
 	}
 	public List<Integer> transferEmployeesToDepartment(List<Integer> employeeIds, String newDepartment) throws EmployeeDaoException{
@@ -187,7 +188,7 @@ public class EmployeeDao {
 		                if (result == 0) {
 		                    connection.rollback();
 		                    logger.error("Update failed for employee id {}. Transaction rolled back.", employeeIds.get(index));
-		                    throw new EmployeeDaoException("Update failed for one or more employees. Transaction rolled back.");
+		                    throw new EmployeeDaoException("Emp-4");
 		                }else {
 		                	updatedIds.add(employeeIds.get(index));
 		                	index++;
@@ -201,11 +202,12 @@ public class EmployeeDao {
 			}catch (SQLException e) {
 	            connection.rollback();
 	            logger.error("Error transferring employees to department '{}'", newDepartment, e);
-	            throw new EmployeeDaoException(Constants.UPDATION_FAILED,e);
+	            System.out.println("Problem");
+	            throw new EmployeeDaoException("Emp-11",e);
 			}
 		}catch(SQLException e) {
 			logger.error("Database error during transferEmployeesToDepartment", e);
-			throw new EmployeeDaoException(Constants.DATABASE_ERROR,e);
+			throw new EmployeeDaoException("Emp-9",e);
 		}
 		
 	}
